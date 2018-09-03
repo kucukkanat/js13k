@@ -1,0 +1,15 @@
+{
+  "name": "JS13K",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack-dev-server",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "copy-webpack-plugin": "^4.5.2",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
+  }
+}
