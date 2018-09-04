@@ -30,16 +30,16 @@ export default class AssetManager {
          */
 
         if(ext.match(imageRegex)) {
-            return this.assets.image[url] ? returnWithPromise(this.image[url]) : this.loadImage(url)
+            return this.assets.image[url] ? returnWithPromise(this.assets.image[url]) : this.loadImage(url)
         } 
         else if(ext.match(audioRegex)) {
-            return this.assets.audio[url] ? returnWithPromise(this.audio[url]) : this.loadAudio(url)
+            return this.assets.audio[url] ? returnWithPromise(this.assets.audio[url]) : this.loadAudio(url)
         } 
         else if(ext.match(jsonRegex)) {
-            return this.assets.data[url] ? returnWithPromise(this.data[url]) : this.loadData(url)
+            return this.assets.data[url] ? returnWithPromise(this.assets.data[url]) : this.loadData(url)
         } 
         else {
-            return this.assets.data[url] ? returnWithPromise(this.data[url]) : this.loadData(url)
+            return this.assets.data[url] ? returnWithPromise(this.assets.data[url]) : this.loadData(url)
         }
     }
     loadImage(url){
