@@ -15,7 +15,7 @@ export default class GameObject {
             throw new Error('Where am I going to draw this? On your wall ?')
         }
         // Add this to scene actors
-        scene.actors.push(this)
+        scene.add(this)
         this.scene = scene
         this.canvas = scene.canvas
         this.context = scene.canvas.getContext("2d")

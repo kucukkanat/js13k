@@ -11,6 +11,9 @@ export default class Scene {
         this.context = this.canvas.getContext("2d")
         this.actors = []
     }
+    add(actor){
+        this.actors.push(actor)
+    }
     draw() {
         // Draws all scene actors
         this.actors.forEach(actor => {

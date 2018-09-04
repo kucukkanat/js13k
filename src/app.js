@@ -1,11 +1,13 @@
 import Scene from 'class/Scene'
 import Ball from 'class/Ball'
 import Cube from 'class/Cube'
+import ClickIndicator from 'class/ClickIndicator'
 
 // Create Scene
 const scene = new Scene()
 scene.addToBody()
 
+new ClickIndicator(scene)
 // Create Game Objects
 const ball = new Ball(scene)
 const platform = new Cube(scene)
@@ -31,7 +33,7 @@ setTimeout(()=>{
 
 // Game logic 
 const gameLoop = () => {
-    scene.clear()
+    // scene.clear()
     scene.draw()
     requestAnimationFrame(gameLoop)
 }
