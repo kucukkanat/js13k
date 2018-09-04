@@ -8,6 +8,9 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
     "copy-webpack-plugin": "^4.5.2",
     "webpack": "^4.17.2",
     "webpack-cli": "^3.1.0",
