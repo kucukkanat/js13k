@@ -42,14 +42,23 @@ export default class GameObject {
     }
     collisions(){
         const collidedObjects = this.scene.actors.filter(actor => {
-            return !(
+            const collides = !(
                 this.right() < actor.left() ||
                 this.bottom() < actor.top() ||
                 this.left() > actor.right() ||
                 this.top() > actor.bottom()
-            ) && actor != this
+            ) && actor != this && actor.solid
+            // Correction
+            if(collides){
+                this.y = this.bottom() >= actor.top() ? actor.top() - this.height : this.y
+            }
+            return collides
         })
         return collidedObjects
+    }
+    removeForces(){
+        this.ddx = 0
+        this.ddy = 0
     }
     draw() {
         

@@ -5,10 +5,13 @@ export default class Cube extends GameObject {
         super(scene)
         this.width = width
         this.height = height
-        
+        this.solid = true
+
+        this.update = this.update.bind(this)
+        this.draw = this.draw.bind(this)
     }
     draw() {
-        console.log(this.width,this.height)
+        this.scene.context.beginPath()
         this.scene.context.rect(this.x,this.y,this.width,this.height)
         this.scene.context.stroke()
     }
