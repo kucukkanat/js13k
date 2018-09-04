@@ -21,7 +21,6 @@ export default class GameObject {
         this.context = scene.canvas.getContext("2d")
     }
     update() {
-        console.log(this.x,this.y,this.dx,this.dy)
         this.dx += this.ddx
         this.dy += this.ddy
 
