@@ -27,7 +27,6 @@ export default class GameObject {
         this.x += this.dx
         this.y += this.dy
         
-        this.calculateCollided()
     }
     top(){
         return this.y
@@ -41,8 +40,8 @@ export default class GameObject {
     right(){
         return this.x + this.width
     }
-    calculateCollided(){
-        this.collidedObjects = this.scene.actors.filter(actor => {
+    collisions(){
+        const collidedObjects = this.scene.actors.filter(actor => {
             return !(
                 this.right() < actor.left() ||
                 this.bottom() < actor.top() ||
@@ -50,7 +49,7 @@ export default class GameObject {
                 this.top() > actor.bottom()
             ) && actor != this
         })
-        
+        return collidedObjects
     }
     draw() {
         

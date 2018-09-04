@@ -12,6 +12,18 @@ export default class Ball extends GameObject{
     update() {
         super.update()
         this.r += this.dr
+
+        if(this.collisions().length !=0) {
+            this.dx = -this.dx
+            this.dy = -this.dy
+
+            this.ddx = -this.ddx
+            this.ddy = -this.ddy
+        }
+        if(this.y<100){
+            this.dy=0
+            this.ddy=0.5
+        }
     }
     draw() {
         this.scene.context.beginPath();
