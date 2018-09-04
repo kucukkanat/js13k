@@ -6,6 +6,8 @@ export default class Ball extends GameObject{
         
         this.r = 20
         this.dr = 0
+        this.width = this.r
+        this.height = this.r
     }
     update() {
         super.update()

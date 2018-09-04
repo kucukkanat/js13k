@@ -12,6 +12,7 @@ const platform = new Cube(scene)
 
 ball.x = 250
 ball.y = 100
+ball.dy=1
 ball.r = 30
 
 platform.width=500

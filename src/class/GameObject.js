@@ -26,6 +26,31 @@ export default class GameObject {
 
         this.x += this.dx
         this.y += this.dy
+        
+        this.calculateCollided()
+    }
+    top(){
+        return this.y
+    }
+    bottom(){
+        return this.y + this.height
+    }
+    left(){
+        return this.x
+    }
+    right(){
+        return this.x + this.width
+    }
+    calculateCollided(){
+        this.collidedObjects = this.scene.actors.filter(actor => {
+            return !(
+                this.right() < actor.left() ||
+                this.bottom() < actor.top() ||
+                this.left() > actor.right() ||
+                this.top() > actor.bottom()
+            ) && actor != this
+        })
+        
     }
     draw() {
         

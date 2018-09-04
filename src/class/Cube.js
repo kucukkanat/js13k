@@ -5,7 +5,7 @@ export default class Cube extends GameObject {
         super(scene)
         this.width = width
         this.height = height
-        console.log(this.scene)
+        
     }
     draw() {
         console.log(this.width,this.height)
