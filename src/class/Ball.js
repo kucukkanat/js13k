@@ -1,14 +1,14 @@
-export default class Ball extends GameObject{
-    constructor(context){
-        super()
-        this.context = context
-        this.r = 20
+import GameObject from 'class/GameObject'
 
-        this.draw = this.draw.bind(this)
+export default class Ball extends GameObject{
+    constructor(scene){
+        super(scene)
+        
+        this.r = 20
     }
     draw() {
-        this.context.beginPath();
-        this.context.arc(this.x, this.y, this.r, 0, 2*Math.PI);
-        this.context.stroke()
+        this.scene.context.beginPath();
+        this.scene.context.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+        this.scene.context.stroke()
     }
 }

@@ -8,6 +8,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'game.bundle.js'
     },
+    devtool:'source-map',
     module: {
         rules: [{
             test: /\.js$/,
@@ -25,6 +26,10 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin([{
                 from: './src/index.html',
+                to: './'
+            },
+            {
+                from: './src/style.css',
                 to: './'
             },
             {

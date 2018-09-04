@@ -1,5 +1,7 @@
+import Scene from 'class/Scene'
+
 export default class GameObject {
-    constructor(properties = {}) {
+    constructor(scene) {
         this.x = 0
         this.y = 0
         // Velocity
@@ -8,12 +10,18 @@ export default class GameObject {
         // Acceleration
         this.ddx = 0
         this.ddy = 0
-
-        for(key in properties) {
-            this.props[key] = properties[key]
+        
+        if(!scene || !(scene instanceof Scene)) {
+            throw new Error('Where am I going to draw this? On your wall ?')
         }
+        // Add this to scene actors
+        scene.actors.push(this)
+        this.scene = scene
+        this.canvas = scene.canvas
+        this.context = scene.canvas.getContext("2d")
     }
     update() {
+        console.log(this.x,this.y,this.dx,this.dy)
         this.dx += this.ddx
         this.dy += this.ddy
 
