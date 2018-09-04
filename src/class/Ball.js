@@ -1,7 +1,7 @@
 import GameObject from 'class/GameObject'
 
 export default class Ball extends GameObject{
-    constructor(scene){
+    constructor(scene, r){
         super(scene)
         
         this.r = 20

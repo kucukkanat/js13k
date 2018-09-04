@@ -9,14 +9,13 @@ scene.addToBody()
 
 new ClickIndicator(scene)
 // Create Game Objects
-const ball = new Ball(scene)
+const ball = new Ball(scene, 30)
 const platform = new Cube(scene)
 
 ball.x = 150
 ball.y = 100
 ball.ddy=0.38
 ball.ddx=0.001
-ball.r = 30
 
 platform.width=200
 platform.height=20
