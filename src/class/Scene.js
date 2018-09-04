@@ -1,3 +1,5 @@
+import AssetManager from 'class/AssetManager'
+
 export default class Scene {
     constructor(canvas) {
         this.canvas = document.getElementById(canvas) || canvas || document.createElement('canvas')
@@ -5,6 +7,7 @@ export default class Scene {
             this.canvas.height = 480
             this.canvas.width = 640
         }
+        this.AssetManager = AssetManager
         this.context = this.canvas.getContext("2d")
         this.actors = []
     }

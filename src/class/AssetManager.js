@@ -1,5 +1,5 @@
 export default class AssetManager {
-    constructor(root){
+    constructor(){
         this.assets = {
             image:[],
             audio:[],

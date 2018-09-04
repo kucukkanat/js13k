@@ -5,6 +5,7 @@ export default class Ball extends GameObject{
         super(scene)
         
         this.r = 20
+        this.dr = 0
     }
     update() {
         super.update()

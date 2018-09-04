@@ -1,30 +1,30 @@
 import Scene from 'class/Scene'
 import Ball from 'class/Ball'
-import AssetManager from 'class/AssetManager'
+import Cube from 'class/Cube'
 
 // Create Scene
 const scene = new Scene()
 scene.addToBody()
 
 // Create Game Objects
-let balls = []
-for (let index = 0; index < 40; index++) {
-    balls.push(new Ball(scene))
-    balls[index].r = index*4
-    balls[index].dx = 20/index
-    balls[index].dy = 20/index
-    balls[index].dr = index/4
-}
+const ball = new Ball(scene)
+const platform = new Cube(scene)
+
+ball.x = 250
+ball.y = 100
+ball.r = 30
+
+platform.width=500
+platform.height=20
+platform.x=100
+platform.y = scene.canvas.height-100
+// Create Game Objects
 
 
+// Game logic 
 const gameLoop = () => {
-    
     scene.clear()
     scene.draw()
     requestAnimationFrame(gameLoop)
 }
 gameLoop()
-
-
-const storage = new AssetManager()
-
