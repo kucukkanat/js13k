@@ -1,5 +1,4 @@
 import Scene from 'class/Scene'
-import Ball from 'class/Ball'
 import Cube from 'class/Cube'
 import ClickIndicator from 'class/ClickIndicator'
 import AssetManager from 'class/AssetManager'
@@ -18,7 +17,7 @@ new ClickIndicator(scene)
 const ball = new Cube(scene, 150, 100, 40, 60)
 const platform = new Cube(scene)
 
-ball.ddy=0.4
+ball.ddy=0.8 
 
 
 platform.width=200

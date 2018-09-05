@@ -29,16 +29,16 @@ export default class GameObject {
         
     }
     top(){
-        return this.y
+        return this.y 
     }
     bottom(){
         return this.y + this.height
     }
     left(){
-        return this.x
+        return this.x 
     }
     right(){
-        return this.x + this.width
+        return this.x + this.width 
     }
     collisions(){
         const collidedObjects = this.scene.actors.filter(actor => {
