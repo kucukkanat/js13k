@@ -1,66 +1,91 @@
-import Scene from 'class/Scene'
+import Scene from './Scene';
+import Vector from './Vector';
+import { BodyType } from './Constants';
 
 export default class GameObject {
-    constructor(scene) {
-        this.x = 0
-        this.y = 0
-        // Velocity
-        this.dx = 0
-        this.dy = 0
-        // Acceleration
-        this.ddx = 0
-        this.ddy = 0
-        
-        if(!scene || !(scene instanceof Scene)) {
-            throw new Error('Where am I going to draw this? On your wall ?')
-        }
-        // Add this to scene actors
-        scene.add(this)
-        this.scene = scene
-        this.canvas = scene.canvas
-        this.context = scene.canvas.getContext("2d")
-    }
-    update() {
-        this.dx += this.ddx
-        this.dy += this.ddy
+  constructor(options) {
+    this.pos = new Vector(0, 0);
 
-        this.x += this.dx
-        this.y += this.dy
-        
+    // Velocity
+    this.velocity = new Vector(0, 0);
+
+    this.forces = [];
+
+    this.body = BodyType.RIGID;
+
+    Object.assign(this, options);
+
+    if (!this.scene || !(this.scene instanceof Scene)) {
+      throw new Error('Where am I going to draw this? On your wall ?');
     }
-    top(){
-        return this.y 
+    // Add this to scene actors
+    this.scene.add(this);
+    this.canvas = this.scene.canvas;
+    this.context = this.scene.canvas.getContext('2d');
+  }
+
+  update() {
+    if (this.body === BodyType.STATIC) {
+      return;
     }
-    bottom(){
-        return this.y + this.height
+
+    const a = this.getAcceleration();
+
+    this.forces = [];
+
+    const oldVelocity = this.velocity.clone();
+    const oldPosition = this.pos.clone();
+
+    this.velocity.add(a);
+    this.pos.add(this.velocity);
+
+    if (this.collides()) {
+      this.velocity.y = -oldVelocity.y * 0.6;
+
+      this.pos = oldPosition.add(this.velocity);
     }
-    left(){
-        return this.x 
-    }
-    right(){
-        return this.x + this.width 
-    }
-    collisions(){
-        const collidedObjects = this.scene.actors.filter(actor => {
-            const collides = !(
-                this.right() < actor.left() ||
-                this.bottom() < actor.top() ||
-                this.left() > actor.right() ||
-                this.top() > actor.bottom()
-            ) && actor != this
-            
-            return collides
-        })
-        return collidedObjects
-    }
-    collides(){
-        return this.collisions().length > 0
-    }
-    removeForces(){
-        this.ddx = 0
-        this.ddy = 0
-    }
-    draw() {
-        
-    }
+  }
+
+  getAcceleration() {
+    return this.forces.reduce((acc, force) => acc.add(force), new Vector());
+  }
+
+  applyForce(force) {
+    this.forces.push(force);
+  }
+
+  top() {
+    return this.pos.y;
+  }
+
+  bottom() {
+    return this.pos.y + this.height;
+  }
+
+  left() {
+    return this.pos.x;
+  }
+
+  right() {
+    return this.pos.x + this.width;
+  }
+
+  collisions() {
+    const collidedObjects = this.scene.actors.filter(actor => {
+      const collides =
+        !(
+          this.right() < actor.left() ||
+          this.bottom() < actor.top() ||
+          this.left() > actor.right() ||
+          this.top() > actor.bottom()
+        ) && actor != this;
+
+      return collides;
+    });
+    return collidedObjects;
+  }
+  collides() {
+    return this.collisions().length > 0;
+  }
+  draw() {}
 }
