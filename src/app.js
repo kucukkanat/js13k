@@ -15,25 +15,17 @@ scene.addToBody()
 
 new ClickIndicator(scene)
 // Create Game Objects
-const ball = new Ball(scene, 30)
+const ball = new Cube(scene, 150, 100, 40, 60)
 const platform = new Cube(scene)
 
-ball.x = 150
-ball.y = 100
-ball.ddy=0.38
-ball.ddx=0.001
+ball.ddy=0.4
+
 
 platform.width=200
 platform.height=20
 platform.x=100
 platform.y = scene.canvas.height-100
 // Create Game Objects
-
-setTimeout(()=>{
-    ball.removeForces()
-    ball.dy = 0
-    ball.ddx=-0.1
-},20000)
 
 // Game logic 
 const gameLoop = () => {

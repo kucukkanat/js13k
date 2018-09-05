@@ -1,14 +1,27 @@
 import GameObject from 'class/GameObject'
 
 export default class Cube extends GameObject {
-    constructor(scene, width=150, height=50, solid=true) {
+    constructor(scene,x,y,w,h,solid) {
         super(scene)
-        this.width = width
-        this.height = height
-        this.solid = true
+        if(arguments.length === 3) {
+            this.width = arguments[1]
+            this.height = arguments[2]
+        }
+        if(arguments.length === 5) {
+            this.x = arguments[1]
+            this.y = arguments[2]
+            this.width = arguments[3]
+            this.height = arguments[4]
+        }
 
-        this.update = this.update.bind(this)
         this.draw = this.draw.bind(this)
+    }
+    update(){
+        super.update()
+        
+        if(this.collides()) {
+            this.dy = -this.dy * 0.8
+        }
     }
     draw() {
         this.scene.context.beginPath()

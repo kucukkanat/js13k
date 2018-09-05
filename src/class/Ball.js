@@ -17,7 +17,7 @@ export default class Ball extends GameObject{
         super.update()
         this.r += this.dr
 
-        if(this.collisions().length !=0) {
+        if(this.collides()) {
             this.dy = -this.dy
         }
         if(this.y<100){

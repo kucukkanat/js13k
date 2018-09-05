@@ -47,14 +47,14 @@ export default class GameObject {
                 this.bottom() < actor.top() ||
                 this.left() > actor.right() ||
                 this.top() > actor.bottom()
-            ) && actor != this && actor.solid
-            // Correction
-            if(collides){
-                this.y = this.bottom() >= actor.top() ? actor.top() - this.height : this.y
-            }
+            ) && actor != this
+            
             return collides
         })
         return collidedObjects
+    }
+    collides(){
+        return this.collisions().length > 0
     }
     removeForces(){
         this.ddx = 0
