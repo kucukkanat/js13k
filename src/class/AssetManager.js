@@ -13,7 +13,11 @@ export default class AssetManager {
         const promises = assetUrls.map(url => this.load(url))
         return Promise.all(promises)
     }
-    load(url) {
+    load() {
+
+        const url = arguments.length === 2 ? arguments[1] : arguments[0]
+        const assetName = arguments[0]
+
         const imageRegex = /(jpeg|jpg|gif|png)$/
         const audioRegex = /(wav|mp3|ogg|aac)$/
         const jsonRegex = /(json)$/
@@ -30,25 +34,28 @@ export default class AssetManager {
          */
 
         if(ext.match(imageRegex)) {
-            return this.assets.image[url] ? returnWithPromise(this.assets.image[url]) : this.loadImage(url)
+            return this.assets.image[assetName] ? returnWithPromise(this.assets.image[assetName]) : this.loadImage.apply(this, arguments)
         } 
         else if(ext.match(audioRegex)) {
-            return this.assets.audio[url] ? returnWithPromise(this.assets.audio[url]) : this.loadAudio(url)
+            return this.assets.audio[assetName] ? returnWithPromise(this.assets.audio[assetName]) : this.loadAudio.apply(this, arguments)
         } 
         else if(ext.match(jsonRegex)) {
-            return this.assets.data[url] ? returnWithPromise(this.assets.data[url]) : this.loadData(url)
+            return this.assets.data[assetName]  ? returnWithPromise(this.assets.data[assetName]) : this.loadData.apply(this, arguments)
         } 
         else {
-            return this.assets.data[url] ? returnWithPromise(this.assets.data[url]) : this.loadData(url)
+            return this.assets.data[assetName]  ? returnWithPromise(this.assets.data[assetName]) : this.loadData.apply(this, arguments)
         }
     }
-    loadImage(url){
+    loadImage(){
+        const url = arguments.length === 2 ? arguments[1] : arguments[0]
+        const assetName = arguments[0]
+
         const image = new Image()
         image.src = url
         return new Promise((resolve, reject) => {
             image.onload = () => {
                 // Add to asset storage
-                this.assets.image[url]=image
+                this.assets.image[assetName]=image
                 resolve(image)
             }
             image.onerror = () => {
@@ -56,18 +63,24 @@ export default class AssetManager {
             }
         })
     }
-    loadAudio(url) {
+    loadAudio() {
+        const url = arguments.length === 2 ? arguments[1] : arguments[0]
+        const assetName = arguments[0]
+
         console.warn(`Audio loader is not supported yet!`)
         return new Promise((resolve, reject) => {
-            this.assets.audio[url]=null
+            this.assets.audio[assetname]=null
             // TODO
         })
     }
-    loadData(url) {
+    loadData() {
+        const url = arguments.length === 2 ? arguments[1] : arguments[0]
+        const assetName = arguments[0]
+
         return fetch(url).then(r=>r.json())
         .then(json => {
             // Add to asset storage
-            this.assets.data[url] = json
+            this.assets.data[assetName] = json
             return json
         })
         

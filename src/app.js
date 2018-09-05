@@ -2,6 +2,12 @@ import Scene from 'class/Scene'
 import Ball from 'class/Ball'
 import Cube from 'class/Cube'
 import ClickIndicator from 'class/ClickIndicator'
+import AssetManager from 'class/AssetManager'
+
+const mgr = new AssetManager()
+mgr.load('background','https://images6.alphacoders.com/715/715677.png')
+mgr.load('https://images6.alphacoders.com/715/715677.png')
+console.log(mgr)
 
 // Create Scene
 const scene = new Scene()
