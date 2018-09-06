@@ -1,33 +1,32 @@
 const AssetManager = require('class/AssetManager')
-const { GRAVITY, BodyType } = require('class/Constants')
+const {
+  GRAVITY,
+  BodyType
+} = require('class/Constants')
 
 module.exports = class Scene {
   constructor(canvas) {
-    this.canvas =
-      document.getElementById(canvas) ||
-      canvas ||
-      document.createElement('canvas');
+    this.canvas = document.getElementById(canvas) || canvas || document.createElement('canvas')
+
     if (!canvas) {
-      this.canvas.height = 480;
-      this.canvas.width = 640;
+      this.canvas.height = 480
+      this.canvas.width = 640
     }
+
     this.AssetManager = AssetManager;
     this.context = this.canvas.getContext('2d');
-    this.actors = [];
+    this.actors = []
   }
   add(actor) {
     this.actors.push(actor);
   }
   draw() {
     // Draws all scene actors
-    this.actors.forEach(actor => {
-      if (actor.body === BodyType.RIGID) {
-        actor.forces.push(GRAVITY);
-      }
-
+    for (let index = 0; index < this.actors.length; index++) {
+      const actor = this.actors[index];
       actor.update();
       actor.draw();
-    });
+    }
   }
   addToBody() {
     document.body.appendChild(this.canvas);

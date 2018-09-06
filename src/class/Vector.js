@@ -5,6 +5,7 @@ module.exports = class Vector {
         this.z = z
     }
     add(vector) {
+        if(!(vector instanceof Vector)) throw new Error(`You should pass a Vector to add!`)
         return new Vector(
             this.x + vector.x,
             this.y + vector.y,
@@ -12,6 +13,7 @@ module.exports = class Vector {
         )
     }
     subtract(vector) {
+        if(!vector instanceof Vector) throw new Error(`You should pass a Vector to add!`)
         return new Vector(this.x - vector.x, this.y - vector.y, this.z - vector.z)
     }
     sub(vector){
