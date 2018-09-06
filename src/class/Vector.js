@@ -25,5 +25,8 @@ module.exports = class Vector {
     clone() {
         return new Vector(this.x, this.y);
     }
+    toString(){
+        console.log(`${this.x} : ${this.y} : ${this.z}`)
+    }
 }
 

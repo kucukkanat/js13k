@@ -8,6 +8,18 @@ module.exports = class Ball extends GameObject {
         this.width = 2*this.r
         this.height = 2*this.r
     }
+    update(){
+        super.update()
+        console.log(this.collisions())
+        if(this.collisions() === 'top' || this.collisions() === 'bottom') {
+            this.velocity.y *= -1
+            console.log('Collided')
+        }
+        if(this.collisions() === 'left' || this.collisions() === 'right') {
+            this.velocity.x *= -1
+            console.log('Collided')
+        }
+    }
     draw() {
         const ctx = this.scene.context
         ctx.beginPath();

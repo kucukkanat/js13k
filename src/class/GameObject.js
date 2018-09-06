@@ -55,15 +55,33 @@ module.exports = class GameObject {
         return this.position.x + this.width;
     }
     collisions() {
-        this.scene.actors.filter(actor => {
-            const collides = !(
-                    this.right() < actor.left() ||
-                    this.bottom() < actor.top() ||
-                    this.left() > actor.right() ||
-                    this.top() > actor.bottom()
-                ) &&
-                actor != this
-            return collides
-        })
+        for (let i = 0; i < this.scene.actors.length; i++) {
+            const actor = this.scene.actors[i]
+            const midDistanceX = Math.abs((this.left() + (this.width / 2)) - (actor.left() + (actor.width / 2)))
+            const midDistanceY = Math.abs((this.top() + (this.height / 2)) - (actor.top() + (actor.height / 2)))
+            const hWidth = this.width / 2 + actor.width / 2
+            const hHeight = this.height / 2 + actor.height / 2
+            const collides = midDistanceX < hWidth && midDistanceY < hHeight && this !== actor
+            if(collides){
+                const collideX = hWidth - midDistanceX
+                const collideY = hHeight - midDistanceY
+                
+                // If vertically collided (y-axis)
+                if(collideY < collideX) {
+                    if(this.velocity.y > 0) {
+                        return 'top'
+                    } else {
+                        return 'bottom'
+                    }
+                } else {
+                    if(this.velocity.x > 0) {
+                        return 'left'
+                    } else {
+                        return 'right'
+                    }
+                }
+            }
+            
+        }
     }
 }
