@@ -19,6 +19,7 @@ module.exports = class AssetManager {
   
       const imageRegex = /(jpeg|jpg|gif|png)$/;
       const audioRegex = /(wav|mp3|ogg|aac)$/;
+      const levelRegex = /(level)$/;
       const jsonRegex = /(json)$/;
       const ext = AssetManager.getExtension(url);
   
@@ -45,6 +46,10 @@ module.exports = class AssetManager {
         return this.assets.data[assetName]
           ? returnWithPromise(this.assets.data[assetName])
           : this.loadData.apply(this, arguments);
+      } else if (ext.match(levelRegex)) {
+        return this.assets.data[assetName]
+          ? returnWithPromise(this.assets.data[assetName])
+          : this.loadLevel.apply(this, arguments);
       } else {
         return this.assets.data[assetName]
           ? returnWithPromise(this.assets.data[assetName])
@@ -89,6 +94,16 @@ module.exports = class AssetManager {
           this.assets.data[assetName] = json;
           return json;
         });
+    }
+    loadLevel(){
+      const url = arguments.length === 2 ? arguments[1] : arguments[0];
+      const assetName = arguments[0];
+      return fetch(url)
+      .then(r => r.text())
+      .then(text => {
+        this.assets.data[assetName] = text
+        return text
+      })
     }
   }
   

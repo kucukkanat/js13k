@@ -3,6 +3,16 @@ const scene = new Scene()
 scene.canvas.width=800
 scene.addToBody()
 
+const LevelLoader = require('class/LevelLoader')
+new LevelLoader('level.level')
+.load()
+
+// const level1 = new LevelLoader('../dist/level.js')
+// level1.load()
+// .then(l => {
+//     console.log(l)
+// })
+
 const BlackPlatform = require('object/BlackPlatform')
 const Vector = require('class/Vector')
 const level = require('../dist/level')
