@@ -7,11 +7,8 @@ const scene = new Scene()
 scene.addToBody()
 
 const b = new Ball({scene, r:20})
-b.acceleration = b.acceleration.add(new Vector(0,1))
-console.log(b)
-
+b.applyForce(new Vector(0,0.2))
 const loop = () => {
-    
     scene.clear()
     scene.draw()
     requestAnimationFrame(loop)

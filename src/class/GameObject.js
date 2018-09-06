@@ -8,10 +8,12 @@ module.exports = class GameObject {
         this.velocity = new Vector(0, 0)
         this.acceleration = new Vector(0, 0)
         
-        
+        this.mass = 1
         this.width = 0
         this.height = 0
         this.body = BodyType.DYNAMIC
+
+        // Override defaults
         Object.assign(this, props)
         
 
@@ -26,6 +28,14 @@ module.exports = class GameObject {
             this.position = this.position.add(this.velocity)
             this.velocity = this.velocity.add(this.acceleration)
         }
+    }
+    removeForces(){
+        this.acceleration = new Vector(0,0,0)
+    }
+    applyForce(F){
+        if(!(F instanceof Vector)) throw new Error(`Force should be a Vector!`)
+        const acceleration = F.scale(1/this.mass) // F = m.a
+        this.acceleration = this.acceleration.add(acceleration)
     }
     top() {
         return this.position.y;

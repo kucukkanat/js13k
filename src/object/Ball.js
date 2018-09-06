@@ -5,8 +5,8 @@ module.exports = class Ball extends GameObject {
         super(props)
         this.r = props.r || 1
         
-        this.width = this.r
-        this.height = this.r
+        this.width = 2*this.r
+        this.height = 2*this.r
     }
     draw() {
         const ctx = this.scene.context
