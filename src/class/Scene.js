@@ -5,17 +5,16 @@ const {
 } = require('class/Constants')
 
 module.exports = class Scene {
-  constructor(canvas) {
-    this.canvas = document.getElementById(canvas) || canvas || document.createElement('canvas')
-
-    if (!canvas) {
-      this.canvas.height = 480
-      this.canvas.width = 640
-    }
-
+  constructor(props={}) {
+    this.actors = []
+    this.canvas = document.getElementById(props.canvas) || props.canvas || document.createElement('canvas')
+    this.canvas.height = props.height || 480
+    this.canvas.width = props.height || 640
+    
+    Object.assign(this, props)
+    
     this.AssetManager = AssetManager;
     this.context = this.canvas.getContext('2d');
-    this.actors = []
   }
   add(actor) {
     this.actors.push(actor);

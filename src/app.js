@@ -1,17 +1,26 @@
 const Scene = require('class/Scene')
-const GameObject = require('class/GameObject')
-const Ball = require('object/Ball')
-const Vector = require('class/Vector')
-const Platform = require('object/Platform')
-
 const scene = new Scene()
+scene.canvas.width=800
 scene.addToBody()
 
-const b = new Ball({scene, r:20, position:new Vector(100,20)})
-b.applyForce(new Vector(0,0.2))
-const brick = new Platform({scene,position:new Vector(50,340),width:428,height:128})
-console.log(brick)
+const BlackPlatform = require('object/BlackPlatform')
+const Vector = require('class/Vector')
+const level = require('../dist/level')
 
+const lines = level.split('\n')
+lines.forEach((line,lineIndex) => {
+    const cells = line.split('')
+    const y = lineIndex*40
+    cells.forEach((cell,cellIndex) => {
+        const x = cellIndex*40
+        if(cell.toLowerCase() === 'x'){
+            
+            const p = new BlackPlatform({scene,position:new Vector(x,y),width:40,height:40})
+        }        
+    })
+})
+
+new BlackPlatform({scene,position:new Vector(40,40),width:40,height:40})
 const loop = () => {
     scene.clear()
     scene.draw()
