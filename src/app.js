@@ -13,12 +13,12 @@ const Player = new GameObject({
     height:40,
     position: new Vector(100,100)
 })
-const anim1 = new Animation(Player,{url:'player_idle.png'})
+const anim1 = new Animation(Player,{url:'player_idle.png',frames:5,speed:500})
 anim1.play()
 setTimeout(()=>{
     console.log('Stopped')
     anim1.pause()
-},1000)
+},10000)
 
 const loop = () => {
     scene.clear()
