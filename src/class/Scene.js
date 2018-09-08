@@ -14,7 +14,17 @@ module.exports = class Scene {
     Object.assign(this, props)
     
     this.AssetManager = AssetManager;
-    this.context = this.canvas.getContext('2d');
+    this.context = this.canvas.getContext('2d')
+    this.keys = []
+    // Keybindings for gameloop
+    document.addEventListener('keydown',event => {
+      const code = event.code.toLowerCase()
+      this.keys[code] = true
+    })
+    document.addEventListener('keyup',event => {
+      const code = event.code.toLowerCase()
+      this.keys[code] = false
+    })
   }
   add(actor) {
     this.actors.push(actor);

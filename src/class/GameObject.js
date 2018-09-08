@@ -88,7 +88,39 @@ module.exports = class GameObject {
             
         }
     }
+    onKeydown(key,cb){
+        document.addEventListener('keydown',event => {
+            const code = event.code.toLowerCase()
+            if(key === code){
+                cb.apply(this)
+            } else if(key === 'any') {
+                cb.apply(this)
+            }
+        })
+    }
+    onKeyup(key,cb){
+        document.addEventListener('keyup',event => {
+            const code = event.code.toLowerCase()
+            if(key === code){
+                cb.apply(this)
+            } else if(arguments.length === 1) {
+                arguments[0].apply(this)
+            }
+        })
+    }
+    onKeypress(key,cb){
+        document.addEventListener('keypress',event => {
+            const code = event.code.toLowerCase()
+            if(key === code){
+                cb.apply(this)
+            }
+        })
+    }
     animation(index,frames,speed) {
+        // Dont restart the same animation (for keydown or repeating events)
+        if(index === this.animationIndex) return
+
+        // Clear previous animation
         clearTimeout(this.loop)
         this.animationIndex = index
         this.tick = 0
@@ -98,7 +130,7 @@ module.exports = class GameObject {
             } else {
                 this.tick = 0
             }
-            this.loop = setTimeout(()=>{frameRoller()},speed)
+            this.loop = setTimeout(frameRoller,speed)
         }
         frameRoller()
     }

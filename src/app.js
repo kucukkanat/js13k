@@ -17,24 +17,28 @@ new AssetManager().load('assets/player_big.png')
         position: new Vector(400,100)
     })
     Player.animation(0,4,400)
-    setTimeout(()=>{
-        Player.velocity.x = -2
-        Player.animation(1,6,200)
-    },3000)
-    setTimeout(()=>{
-        Player.velocity.x = 2
+    
+    Player.onKeydown('arrowright',function(){
         Player.animation(2,6,200)
-    },6000)
-    setTimeout(()=>{
-        Player.velocity.x = 0
-        Player.animation(0,4,200)
-    },8000)
+        this.velocity.x = 3
+    })
+    Player.onKeydown('arrowleft',function(){
+        Player.animation(1,6,200)
+        this.velocity.x = -3
+    })
+    Player.onKeyup(function(){
+        animR=false
+        animL=false
+        this.velocity.x = 0
+        Player.animation(0,4,400)
+    })
     
 })
 
 const loop = () => {
     scene.clear()
     scene.draw()
+    
     requestAnimationFrame(loop)
 }
 loop()
