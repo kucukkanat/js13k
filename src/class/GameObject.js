@@ -1,9 +1,10 @@
 const Vector = require('class/Vector')
 const Scene = require('class/Scene')
+
 const {
     BodyType
 } = require('class/Constants')
-
+const AssetManager = require('class/AssetManager')
 module.exports = class GameObject {
     constructor(props) {
         this.position = new Vector(10, 10)
@@ -14,7 +15,10 @@ module.exports = class GameObject {
         this.width = 0
         this.height = 0
         this.body = BodyType.DYNAMIC
-
+        this.tick=0
+        this.animationIndex=0
+        this.sprite = null
+        
         // Override defaults
         Object.assign(this, props)
 
@@ -82,6 +86,35 @@ module.exports = class GameObject {
                 }
             }
             
+        }
+    }
+    animation(index,frames,speed) {
+        clearTimeout(this.loop)
+        this.animationIndex = index
+        this.tick = 0
+        const frameRoller = () => {
+            if(this.tick < frames - 1){
+                this.tick += 1
+            } else {
+                this.tick = 0
+            }
+            this.loop = setTimeout(()=>{frameRoller()},speed)
+        }
+        frameRoller()
+    }
+    draw(){
+        if(this.sprite){
+            this.scene.context.drawImage(
+                this.sprite, 
+                this.tick*this.width, 
+                this.animationIndex*this.height, 
+                this.width, 
+                this.height, 
+                this.position.x, 
+                this.position.y, 
+                this.width, 
+                this.height
+            )
         }
     }
 }

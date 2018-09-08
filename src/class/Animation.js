@@ -16,13 +16,14 @@ module.exports = class Animation {
         
         // Overwrite GameObjects draw method for animation
         const self = this
+        
         gameObject.draw = function() {
             assetManager.load(self.url)
             .then(image => {
                 this.scene.context.drawImage(
                     image, 
                     self.tick*this.width, 
-                    self.index, 
+                    self.index*this.height, 
                     this.width, 
                     this.height, 
                     this.position.x, 

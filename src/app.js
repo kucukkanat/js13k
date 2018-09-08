@@ -1,24 +1,36 @@
 const Scene = require('class/Scene')
 const GameObject = require('class/GameObject')
-const Animation = require('class/Animation')
+const AssetManager = require('class/AssetManager')
 const Vector = require('class/Vector')
 const scene = new Scene()
-scene.canvas.width=800
 scene.addToBody()
 
-const Player = new GameObject({
-    name:'Player',
-    scene,
-    width:40,
-    height:40,
-    position: new Vector(100,100)
+// Load sprite
+new AssetManager().load('assets/player_big.png')
+.then(sprite => {
+    const Player = new GameObject({
+        name:'Player',
+        scene,
+        sprite,
+        width:80,
+        height:80,
+        position: new Vector(400,100)
+    })
+    Player.animation(0,4,400)
+    setTimeout(()=>{
+        Player.velocity.x = -2
+        Player.animation(1,6,200)
+    },3000)
+    setTimeout(()=>{
+        Player.velocity.x = 2
+        Player.animation(2,6,200)
+    },6000)
+    setTimeout(()=>{
+        Player.velocity.x = 0
+        Player.animation(0,4,200)
+    },8000)
+    
 })
-const anim1 = new Animation(Player,{url:'player_idle.png',frames:5,speed:500})
-anim1.play()
-setTimeout(()=>{
-    console.log('Stopped')
-    anim1.pause()
-},10000)
 
 const loop = () => {
     scene.clear()
