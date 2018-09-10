@@ -46,18 +46,19 @@ new AssetManager().load('assets/player_big.png')
     Player.sprite.play()
     Player2.sprite.play()
     Player.onKeydown('arrowright',function(){
+        this.sprite.frames=6
         this.sprite.y = 160
         this.acceleration.x = this.velocity.x < 1 ? 0.1 : 0
     })
     Player.onKeydown('arrowleft',function(){
+        this.sprite.frames=6
         this.sprite.y = 80
         this.acceleration.x = this.velocity.x > -1 ? -0.1 : 0
     })
     Player.onKeyup(function(){
         this.velocity.x = 0
         this.acceleration.x = 0
-        this.sprite.y=0
-        this.sprite.frames=4
+        this.sprite.frames=1
     })
     Player.onCollide = function(direction){
         console.log(direction)
