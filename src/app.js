@@ -22,19 +22,46 @@ new AssetManager().load('assets/player_big.png')
             width:80,
             height:80,
             frames:6,
+            speed:200
+        })
+    })
+    const Player2 = new GameObject({
+        name:'Player',
+        scene,
+        width:80,
+        height:80,
+        position: new Vector(20,100),
+        sprite: new Sprite({
+            image,
+            x:0,
+            y:0,
+            width:80,
+            height:80,
+            frames:4,
             speed:500
         })
     })
     
+
     Player.sprite.play()
+    Player2.sprite.play()
     Player.onKeydown('arrowright',function(){
-        console.log('right')
-        Player.sprite.y = 160
+        this.sprite.y = 160
+        this.acceleration.x = this.velocity.x < 1 ? 0.1 : 0
     })
     Player.onKeydown('arrowleft',function(){
-        console.log('left')
-        Player.sprite.y = 80
+        this.sprite.y = 80
+        this.acceleration.x = this.velocity.x > -1 ? -0.1 : 0
     })
+    Player.onKeyup(function(){
+        this.velocity.x = 0
+        this.acceleration.x = 0
+        this.sprite.y=0
+        this.sprite.frames=4
+    })
+    Player.onCollide = function(direction){
+        console.log(direction)
+    }
 })
 
 const loop = () => {

@@ -34,6 +34,10 @@ module.exports = class GameObject {
             this.position = this.position.add(this.velocity)
             this.velocity = this.velocity.add(this.acceleration)
         }
+        const collision = this.collision()
+        if(collision){
+            this.onCollide(collision)
+        }
     }
     removeForces() {
         this.acceleration = new Vector(0, 0, 0)
@@ -42,6 +46,12 @@ module.exports = class GameObject {
         if (!(F instanceof Vector)) throw new Error(`Force should be a Vector!`)
         const acceleration = F.scale(1 / this.mass) // F = m.a
         this.acceleration = this.acceleration.add(acceleration)
+    }
+    midX(){
+        return this.position.x + this.width/2
+    }
+    midY(){
+        return this.position.y + this.height/2
     }
     top() {
         return this.position.y;
@@ -58,11 +68,12 @@ module.exports = class GameObject {
     right() {
         return this.position.x + this.width;
     }
-    collisions() {
+    onCollide(){}
+    collision() {
         for (let i = 0; i < this.scene.actors.length; i++) {
             const actor = this.scene.actors[i]
-            const midDistanceX = Math.abs((this.left() + (this.width / 2)) - (actor.left() + (actor.width / 2)))
-            const midDistanceY = Math.abs((this.top() + (this.height / 2)) - (actor.top() + (actor.height / 2)))
+            const midDistanceX = Math.abs(this.midX() - actor.midX())
+            const midDistanceY = Math.abs(this.midY() - actor.midY())
             const hWidth = this.width / 2 + actor.width / 2
             const hHeight = this.height / 2 + actor.height / 2
             const collides = midDistanceX < hWidth && midDistanceY < hHeight && this !== actor
@@ -116,24 +127,7 @@ module.exports = class GameObject {
             }
         })
     }
-    animation(index,frames,speed) {
-        // Dont restart the same animation (for keydown or repeating events)
-        if(index === this.animationIndex) return
-
-        // Clear previous animation
-        clearTimeout(this.loop)
-        this.animationIndex = index
-        this.tick = 0
-        const frameRoller = () => {
-            if(this.tick < frames - 1){
-                this.tick += 1
-            } else {
-                this.tick = 0
-            }
-            this.loop = setTimeout(frameRoller,speed)
-        }
-        frameRoller()
-    }
+    
     draw(){
         if(this.sprite){
             this.scene.context.drawImage(
