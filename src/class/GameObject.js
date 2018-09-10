@@ -137,11 +137,11 @@ module.exports = class GameObject {
     draw(){
         if(this.sprite){
             this.scene.context.drawImage(
-                this.sprite, 
-                this.tick*this.width, 
-                this.animationIndex*this.height, 
-                this.width, 
-                this.height, 
+                this.sprite.image, 
+                this.sprite.x, //source x
+                this.sprite.y, // source y
+                this.sprite.width, // source width
+                this.sprite.height, // source height
                 this.position.x, 
                 this.position.y, 
                 this.width, 

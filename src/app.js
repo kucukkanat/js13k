@@ -1,38 +1,40 @@
 const Scene = require('class/Scene')
+const Vector = require('class/Vector')
+const Sprite = require('class/Sprite')
 const GameObject = require('class/GameObject')
 const AssetManager = require('class/AssetManager')
-const Vector = require('class/Vector')
 const scene = new Scene()
 scene.addToBody()
 
 // Load sprite
 new AssetManager().load('assets/player_big.png')
-.then(sprite => {
+.then(image => {
     const Player = new GameObject({
         name:'Player',
         scene,
-        sprite,
         width:80,
         height:80,
-        position: new Vector(400,100)
+        position: new Vector(400,100),
+        sprite: new Sprite({
+            image,
+            x:0,
+            y:80,
+            width:80,
+            height:80,
+            frames:6,
+            speed:500
+        })
     })
-    Player.animation(0,4,400)
     
+    Player.sprite.play()
     Player.onKeydown('arrowright',function(){
-        Player.animation(2,6,200)
-        this.velocity.x = 3
+        console.log('right')
+        Player.sprite.y = 160
     })
     Player.onKeydown('arrowleft',function(){
-        Player.animation(1,6,200)
-        this.velocity.x = -3
+        console.log('left')
+        Player.sprite.y = 80
     })
-    Player.onKeyup(function(){
-        animR=false
-        animL=false
-        this.velocity.x = 0
-        Player.animation(0,4,400)
-    })
-    
 })
 
 const loop = () => {
