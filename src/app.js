@@ -45,6 +45,7 @@ new AssetManager().load('assets/player_big.png')
 
     Player.sprite.play()
     Player2.sprite.play()
+    Player2.name='enemy'
     Player.onKeydown('arrowright',function(){
         this.sprite.frames=6
         this.sprite.y = 160
@@ -60,8 +61,8 @@ new AssetManager().load('assets/player_big.png')
         this.acceleration.x = 0
         this.sprite.frames=1
     })
-    Player.onCollide = function(direction){
-        console.log(direction)
+    Player.onCollide = function(items){
+        console.log(items[0].direction)
     }
 })
 

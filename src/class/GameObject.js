@@ -34,9 +34,10 @@ module.exports = class GameObject {
             this.position = this.position.add(this.velocity)
             this.velocity = this.velocity.add(this.acceleration)
         }
-        const collision = this.collision()
-        if(collision){
-            this.onCollide(collision)
+        // Run onCollide function if collides
+        const collisions = this.collisions()
+        if(collisions.length > 0){
+            this.onCollide(collisions)
         }
     }
     removeForces() {
@@ -69,7 +70,8 @@ module.exports = class GameObject {
         return this.position.x + this.width;
     }
     onCollide(){}
-    collision() {
+    collisions() {
+        const collidedActors = []
         for (let i = 0; i < this.scene.actors.length; i++) {
             const actor = this.scene.actors[i]
             const midDistanceX = Math.abs(this.midX() - actor.midX())
@@ -84,20 +86,22 @@ module.exports = class GameObject {
                 // If vertically collided (y-axis)
                 if(collideY < collideX) {
                     if(this.velocity.y > 0) {
-                        return 'top'
-                    } else {
-                        return 'bottom'
-                    }
+                        collidedActors.push({actor,direction:'top'})
+                    } else if (this.velocity.y < 0) {
+                        collidedActors.push({actor,direction:'bottom'})
+                    } 
+                    
                 } else {
                     if(this.velocity.x > 0) {
-                        return 'left'
-                    } else {
-                        return 'right'
-                    }
+                        collidedActors.push({actor,direction:'left'})
+                    } else if (this.velocity.x < 0) {
+                        collidedActors.push({actor,direction:'right'})
+                    } 
+                    
                 }
             }
-            
         }
+        return collidedActors
     }
     onKeydown(key,cb){
         document.addEventListener('keydown',event => {
