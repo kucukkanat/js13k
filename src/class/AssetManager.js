@@ -1,3 +1,6 @@
+/**
+ * @class AssetManager
+ */
 module.exports = class AssetManager {
     constructor() {
       this.assets = {
@@ -6,13 +9,28 @@ module.exports = class AssetManager {
         data: [],
       };
     }
+    /**
+     * @memberof AssetManager
+     * @param {string} url
+     */
     static getExtension(url) {
       return url.split('.').pop();
     }
+    /**
+     * @memberof AssetManager
+     * @param {array} assetUrls - Array of strings
+     * @returns {Promise} Array of asset files
+     */
     loadMultiple(assetUrls) {
       const promises = assetUrls.map(url => this.load(url));
       return Promise.all(promises);
     }
+    /**
+     * @memberof AssetManager
+     * @param {string} assetName - Optional
+     * @param {string} url - If one parameter, first parameter becomes url
+     * @returns {Promise} Asset file
+     */
     load() {
       const url = arguments.length === 2 ? arguments[1] : arguments[0];
       const assetName = arguments[0];
@@ -56,6 +74,12 @@ module.exports = class AssetManager {
           : this.loadData.apply(this, arguments);
       }
     }
+    /**
+     * @memberof AssetManager
+     * @param {string} assetName - Optional
+     * @param {string} url - If one parameter, first parameter becomes url
+     * @returns {Promise} Image 
+     */
     loadImage() {
       const url = arguments.length === 2 ? arguments[1] : arguments[0];
       const assetName = arguments[0];
@@ -73,6 +97,9 @@ module.exports = class AssetManager {
         };
       });
     }
+    /**
+     * @memberof AssetManager
+     */
     loadAudio() {
       const url = arguments.length === 2 ? arguments[1] : arguments[0];
       const assetName = arguments[0];
@@ -83,6 +110,12 @@ module.exports = class AssetManager {
         // TODO
       });
     }
+    /**
+     * @memberof AssetManager
+     * @param {string} assetName - Optional
+     * @param {string} dataUrl - If one parameter, then first parameter becomes the url
+     * @returns {Promise} JSON object of data
+     */
     loadData() {
       const url = arguments.length === 2 ? arguments[1] : arguments[0];
       const assetName = arguments[0];
@@ -95,6 +128,9 @@ module.exports = class AssetManager {
           return json;
         });
     }
+    /**
+     * @memberof AssetManager
+     */
     loadLevel(){
       const url = arguments.length === 2 ? arguments[1] : arguments[0];
       const assetName = arguments[0];

@@ -1,8 +1,8 @@
-/**
- * References :
- * 
- * For body types : https://docs.coronalabs.com/guide/physics/physicsBodies/index.html#create
- */
+
+//  * References :
+//  * 
+//  * For body types : https://docs.coronalabs.com/guide/physics/physicsBodies/index.html#create
+
 const Vector = require('class/Vector')
 
 const BodyType = {

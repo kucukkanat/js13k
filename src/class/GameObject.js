@@ -6,7 +6,21 @@ const {
     BodyType
 } = require('class/Constants')
 const AssetManager = require('class/AssetManager')
+
 module.exports = class GameObject {
+    /**
+     * @class GameObject
+     * @param {object} props 
+     * @param {Vector} props.position
+     * @param {Vector} props.velocity
+     * @param {Vector} props.acceleration
+     * 
+     * @param {number} props.mass
+     * @param {number} props.width
+     * @param {number} props.height
+     * @param {Sprite} props.sprite
+     * 
+     */
     constructor(props) {
         this.position = new Vector(10, 10)
         this.velocity = new Vector(0, 0)

@@ -7,10 +7,15 @@
     "lint": "eslint src/",
     "dev": "clear; webpack-dev-server",
     "build": "webpack --mode production",
+    "build:docs": "jsdoc src/** -d dist/docs",
+    "watch:docs": "chokidar src/**/*.js -c 'yarn build:docs' ",
     "anal": "webpack --profile --json > dist/stats.json && webpack-bundle-analyzer dist/stats.json "
   },
   "devDependencies": {
+    "chokidar": "^2.0.4",
+    "chokidar-cli": "^1.2.1",
     "copy-webpack-plugin": "^4.5.2",
+    "jsdoc": "^3.5.5",
     "webpack": "^4.17.2",
     "webpack-bundle-analyzer": "^2.13.1",
     "webpack-cli": "^3.1.0",

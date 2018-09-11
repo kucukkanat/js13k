@@ -1,3 +1,6 @@
+/**
+ * @class Sprite
+ */
 module.exports = class Sprite{
     constructor(props){
         ['image','x','y','width','height']
