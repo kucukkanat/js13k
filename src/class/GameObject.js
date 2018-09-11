@@ -27,8 +27,8 @@ module.exports = class GameObject {
         this.acceleration = new Vector(0, 0)
 
         this.mass = 1
-        this.width = 0
-        this.height = 0
+        this.width = 20
+        this.height = 20
         this.body = BodyType.DYNAMIC
         this.tick=0
         this.animationIndex=0
@@ -36,8 +36,7 @@ module.exports = class GameObject {
         
         // Override defaults
         Object.assign(this, props)
-
-        if(this.sprite instanceof Sprite) throw new Error(`Sprite must be an instance of Sprite class!`)
+        if (!this.sprite instanceof Sprite) throw new Error(`Sprite must be an instance of Sprite class!`)
         if (!this.scene) throw new Error(`props.scene is undefined!`)
         if (!this.scene instanceof Scene) throw new Error(`props.scene is not a Scene object!`)
 

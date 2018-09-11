@@ -4,10 +4,10 @@ module.exports = class Sprite{
      * @class Sprite
      * @param {object} props 
      * @param {image} props.image - Must be returned from {@link AssetManager}
-     * @param {number} x - X point to start to crop image
-     * @param {number} y - Y point to start to crop image
-     * @param {number} width - Crop width
-     * @param {number} height - Crop height
+     * @param {number} props.x - X point to start to crop image
+     * @param {number} props.y - Y point to start to crop image
+     * @param {number} props.width - Crop width
+     * @param {number} props.height - Crop height
      */
     constructor(props){
         ['image','x','y','width','height']

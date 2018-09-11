@@ -4,8 +4,24 @@ const AssetManager = require('class/AssetManager')
 const Vector = require('class/Vector')
 
 // 25x25px
-const Player = new GameObject({
-    position: new Vector(100,100)
-})
 
-module.exports = Player
+module.exports = {
+    init : (scene) => new AssetManager()
+    .load('assets/Officer.png')
+    .then(image => {
+        const player = new GameObject({
+            scene,
+            width:40,
+            height:40,
+            position: new Vector(100,100),
+            sprite: new Sprite({
+                image,
+                x:0,
+                y:0,
+                width:25,
+                height:25
+            })
+        })
+        return 
+    })
+}
