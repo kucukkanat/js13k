@@ -22,6 +22,6 @@ module.exports = {
                 height:25
             })
         })
-        return 
+        return player
     })
 }
