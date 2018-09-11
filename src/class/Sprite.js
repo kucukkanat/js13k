@@ -8,6 +8,9 @@ module.exports = class Sprite{
      * @param {number} props.y - Y point to start to crop image
      * @param {number} props.width - Crop width
      * @param {number} props.height - Crop height
+     * @param {number} props.tick - Animation starting frame index
+     * @param {number} props.frames - Number of frames in animation
+     * @param {number} props.speed - Speed in miliseconds
      */
     constructor(props){
         ['image','x','y','width','height']
