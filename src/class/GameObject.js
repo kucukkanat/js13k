@@ -44,6 +44,10 @@ module.exports = class GameObject {
         // Add to the scene after constructing
         this.scene.add(this)
     }
+    /**
+     * @memberof GameObject
+     * Updates the GameObject every frame
+     */
     update() {
         if (this.body !== BodyType.STATIC) {
             this.position = this.position.add(this.velocity)
@@ -55,36 +59,69 @@ module.exports = class GameObject {
             this.onCollide(collisions)
         }
     }
+    /**
+     * @memberof GameObject
+     * Removes all forces (acceleration) on the object
+     */
     removeForces() {
         this.acceleration = new Vector(0, 0, 0)
     }
+    /**
+     * @memberof GameObject
+     * @param {Vector} force
+     */
     applyForce(F) {
         if (!(F instanceof Vector)) throw new Error(`Force should be a Vector!`)
         const acceleration = F.scale(1 / this.mass) // F = m.a
         this.acceleration = this.acceleration.add(acceleration)
     }
+    /**
+     * @memberof GameObject
+     * @returns {number} x - The middle position on x axis
+     */
     midX(){
         return this.position.x + this.width/2
     }
+    /**
+     * @memberof GameObject
+     * @returns {number} y - The middle position on y axis
+     */
     midY(){
         return this.position.y + this.height/2
     }
+    /**
+     * @memberof GameObject
+     * @returns {number} y - The top point on y axis
+     */
     top() {
         return this.position.y;
     }
-
+    /**
+     * @memberof GameObject
+     * @returns {number} y - The bottom point on y axis
+     */
     bottom() {
         return this.position.y + this.height;
     }
-
+    /**
+     * @memberof GameObject
+     * @returns {number} x - The leftmost point on x axis
+     */
     left() {
         return this.position.x;
     }
-
+    /**
+     * @memberof GameObject
+     * @returns {number} x - The rightmost point on x axis
+     */
     right() {
         return this.position.x + this.width;
     }
     onCollide(){}
+    /**
+     * @memberof GameObject
+     * @returns {GameObject[]} Array of collides objects
+     */
     collisions() {
         const collidedActors = []
         for (let i = 0; i < this.scene.actors.length; i++) {
@@ -122,6 +159,11 @@ module.exports = class GameObject {
         }
         return collidedActors
     }
+    /**
+     * @memberof GameObject
+     * @param {string} key - The key code
+     * @param {function} cb - function to call
+     */
     onKeydown(key,cb){
         document.addEventListener('keydown',event => {
             const code = event.code.toLowerCase()
@@ -132,6 +174,11 @@ module.exports = class GameObject {
             }
         })
     }
+    /**
+     * @memberof GameObject
+     * @param {string} key - The key code
+     * @param {function} cb - function to call
+     */
     onKeyup(key,cb){
         document.addEventListener('keyup',event => {
             const code = event.code.toLowerCase()
@@ -142,6 +189,11 @@ module.exports = class GameObject {
             }
         })
     }
+    /**
+     * @memberof GameObject
+     * @param {string} key - The key code
+     * @param {function} cb - function to call
+     */
     onKeypress(key,cb){
         document.addEventListener('keypress',event => {
             const code = event.code.toLowerCase()
@@ -150,7 +202,10 @@ module.exports = class GameObject {
             }
         })
     }
-    
+    /**
+     * @memberof GameObject
+     * Draws the gameobject if it has a sprite
+     */
     draw(){
         if(this.sprite){
             this.scene.context.drawImage(

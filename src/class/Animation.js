@@ -1,6 +1,8 @@
 module.exports = class Animation extends Sprite {
     /**
+     * !!! - DEPRECATED - !!!
      * @class Animation
+     * 
      * @param {object} props - Properties
      * @param {number} props.animationIndex
      * @param {number} props.speed

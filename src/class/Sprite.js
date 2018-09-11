@@ -1,7 +1,14 @@
-/**
- * @class Sprite
- */
+
 module.exports = class Sprite{
+    /**
+     * @class Sprite
+     * @param {object} props 
+     * @param {image} props.image - Must be returned from {@link AssetManager}
+     * @param {number} x - X point to start to crop image
+     * @param {number} y - Y point to start to crop image
+     * @param {number} width - Crop width
+     * @param {number} height - Crop height
+     */
     constructor(props){
         ['image','x','y','width','height']
         .forEach(key => {
@@ -15,8 +22,12 @@ module.exports = class Sprite{
         this.loop = null
         this.tick = props.tick || 0
         this.frames = props.frames || 1
-        this.speed = props.speed || 1
+        this.speed = props.speed || 200
     }
+    /**
+     * @memberof Sprite
+     * Plays the animation
+     */
     play(){
         const roller = ()=>{
             if(this.tick < this.frames - 1) {
