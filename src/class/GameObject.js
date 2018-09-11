@@ -1,5 +1,6 @@
 const Vector = require('class/Vector')
 const Scene = require('class/Scene')
+const Sprite = require('class/Sprite')
 
 const {
     BodyType
@@ -22,7 +23,7 @@ module.exports = class GameObject {
         // Override defaults
         Object.assign(this, props)
 
-
+        if(this.sprite instanceof Sprite) throw new Error(`Sprite must be an instance of Sprite class!`)
         if (!this.scene) throw new Error(`props.scene is undefined!`)
         if (!this.scene instanceof Scene) throw new Error(`props.scene is not a Scene object!`)
 
