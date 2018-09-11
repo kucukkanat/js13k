@@ -89,7 +89,10 @@ module.exports = class GameObject {
                         collidedActors.push({actor,direction:'top'})
                     } else if (this.velocity.y < 0) {
                         collidedActors.push({actor,direction:'bottom'})
-                    } 
+                    }
+                    // Correction - save the GameObject from merging the other actor
+                    console.log(this.bottom(),actor.top())
+                    this.position.y -= this.velocity.y
                     
                 } else {
                     if(this.velocity.x > 0) {
@@ -97,7 +100,8 @@ module.exports = class GameObject {
                     } else if (this.velocity.x < 0) {
                         collidedActors.push({actor,direction:'right'})
                     } 
-                    
+                    // Correction - save the GameObject from merging the other actor
+                    this.position.x -= this.velocity.x
                 }
             }
         }

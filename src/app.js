@@ -14,7 +14,7 @@ new AssetManager().load('assets/player_big.png')
         scene,
         width:80,
         height:80,
-        position: new Vector(400,100),
+        position: new Vector(400,200),
         sprite: new Sprite({
             image,
             x:0,
@@ -30,7 +30,7 @@ new AssetManager().load('assets/player_big.png')
         scene,
         width:80,
         height:80,
-        position: new Vector(20,100),
+        position: new Vector(20,200),
         sprite: new Sprite({
             image,
             x:0,
@@ -56,13 +56,38 @@ new AssetManager().load('assets/player_big.png')
         this.sprite.y = 80
         this.acceleration.x = this.velocity.x > -1 ? -0.1 : 0
     })
-    Player.onKeyup(function(){
+    Player.onKeyup('arrowright',function(){
+        this.velocity.x = 0
+        this.acceleration.x = 0
+        this.sprite.frames=1
+    })
+    Player.onKeyup('arrowleft',function(){
         this.velocity.x = 0
         this.acceleration.x = 0
         this.sprite.frames=1
     })
     Player.onCollide = function(items){
+        if(items[0].direction === 'top' || items[0].direction === 'bottom') {
+            this.velocity.y = 0
+        } else if(items[0].direction === 'right' || items[0].direction === 'left') {
+            this.velocity.x = 0
+        }
+        if(items[0].direction === 'top') {
+            this.jumped = false
+        }
         console.log(items[0].direction)
+    }
+    Player.onKeydown('space',function(){
+        if(!this.jumped) {
+            this.jumped = true
+            this.velocity.y = -6
+            this.acceleration.y = 0.1
+        }
+    })
+    const old = Player.update
+    Player.update = function(){
+        old.apply(Player)
+        
     }
 })
 
