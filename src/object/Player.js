@@ -11,15 +11,17 @@ module.exports = {
     .then(image => {
         const player = new GameObject({
             scene,
-            width:40,
-            height:40,
+            width:60,
+            height:60,
             position: new Vector(100,100),
             sprite: new Sprite({
                 image,
                 x:0,
                 y:0,
                 width:25,
-                height:25
+                height:25,
+                frames:4,
+                speed:200
             })
         })
         return player

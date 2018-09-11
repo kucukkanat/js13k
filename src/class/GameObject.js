@@ -67,6 +67,13 @@ module.exports = class GameObject {
     }
     /**
      * @memberof GameObject
+     * Removes velocity on all directions on the object
+     */
+    removeVelocity(){
+        this.velocity = new Vector(0,0)
+    }
+    /**
+     * @memberof GameObject
      * @param {Vector} force
      */
     applyForce(F) {
