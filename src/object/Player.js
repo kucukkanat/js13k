@@ -20,7 +20,7 @@ module.exports = {
                 y:0,
                 width:25,
                 height:25,
-                frames:4,
+                frames:6,
                 speed:200
             })
         })
