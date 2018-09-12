@@ -16,3 +16,21 @@ const loop = () => {
 }
 loop()
 ```
+
+### Build with 
+
+```
+yarn build
+```
+
+### Develop with 
+
+```
+yarn dev
+```
+
+### Build the documents with 
+
+```
+yarn build:docs
+```
