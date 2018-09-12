@@ -53,13 +53,6 @@ module.exports = {
 									console.log('Desk collided')
 								})
 
-								const temp = desk.draw
-								desk.draw = ()=>{
-									temp.apply(desk)
-									const ctx = desk.scene.context
-									ctx.rect(desk.position.x,desk.position.y,desk.width,desk.height);
-									ctx.stroke();
-								}
         })
         
     })
