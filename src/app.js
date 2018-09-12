@@ -51,22 +51,34 @@ const startGame = () => {
                     player.velocity.x = 4
                     player.sprite.speed = 100
                     player.sprite.frames = 4
+                    if(player.right() > player.scene.canvas.width) {
+                        player.velocity.x = 0
+                    }
                 }
                 if (keys['arrowleft']) {
                     player.sprite.y = 50
                     player.velocity.x = -4
                     player.sprite.speed = 100
                     player.sprite.frames = 4
+                    if(player.left() < 0) {
+                        player.velocity.x = 0
+                    }
                 }
                 if (keys['arrowup']) {
                     player.sprite.y = 25
                     player.velocity.y = -4
                     player.sprite.speed = 100
+                    if(player.top() < 0) {
+                        player.velocity.y = 0
+                    }
                 }
                 if (keys['arrowdown']) {
                     player.sprite.y = 50
                     player.velocity.y = 4
                     player.sprite.speed = 100
+                    if(player.bottom() > player.scene.canvas.height) {
+                        player.velocity.y = 0
+                    }
                 }
                 const horizontalStop = !keys.arrowright && !keys.arrowleft
                 const verticalStop = !keys.arrowup && !keys.arrowdown
