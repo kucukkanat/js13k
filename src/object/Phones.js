@@ -18,8 +18,8 @@ module.exports = {
                 for (let x = 0; x < cells.length; x++) {
                     if (cells[x] === 'x') {
                         deskPositions.push({
-                            x: x * 55 + 20,
-                            y: y * 55
+                            x: x * 54 + 20,
+                            y: y * 25 - 25
                         })
                     }
 
@@ -42,22 +42,30 @@ module.exports = {
                         frames: 4
                     })
                 })
-								
-								phone.onCollide(items => {
-									console.log('Collided')
-									console.log(items)
-								})
+
+                
+                
+
+                phone.onCollide(items => {
+                    console.log('Collided')
+                    console.log(items)
+                })
+                phone.pickup = ()=>{
+                    phone.sprite.pause()
+                    phone.sprite.x = 0
+                    phone.ringing = false
+                }
                 // Randomly start to ring
                 const ring = () => {
+                    phone.ringing = true
                     const ringFor = 5
-                    const randomTime = Math.random() * 15*SECONDS
-                    
+                    const randomTime = Math.random() * 15 * SECONDS
+
                     setTimeout(() => {
                         phone.sprite.play()
                         // Ring for 5 seconds
                         setTimeout(() => {
-                            phone.sprite.pause()
-                            phone.sprite.x = 0
+                            phone.pickup()
                         }, ringFor * SECONDS)
                         ring()
                     }, randomTime)

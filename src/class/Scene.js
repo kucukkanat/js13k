@@ -9,7 +9,7 @@ module.exports = class Scene {
     this.actors = []
     this.canvas = document.getElementById(props.canvas) || props.canvas || document.createElement('canvas')
     this.canvas.height = props.height || 480
-    this.canvas.width = props.height || 640
+    this.canvas.width = props.width || 640
     
     Object.assign(this, props)
     
