@@ -1,6 +1,9 @@
 canvas {
-    width: 100%;
-    border: 1px solid #ccc
+    width: 80%;
+    margin:0 auto;
+    border: 1px solid #ccc;
+    display:block;
+    max-height:100%
 }
 .hide {
     display:none
