@@ -20,7 +20,7 @@ xx000000x0
 module.exports = {
     floorPlan,
     init: (scene) => new AssetManager()
-        .load('assets/desk_cropped.png')
+        .load('assets/desk.png')
         .then(image => {
             const deskPositions = []
             const rows = floorPlan.split('\n')

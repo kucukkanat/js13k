@@ -5,6 +5,9 @@ const scene = new Scene({
     height: 300
 })
 scene.addToBody()
+// Hide the canvas in the beginning of the game
+scene.canvas.classList.add('hide')
+const startScreen = require('./start-screen')
 const keys = []
 document.addEventListener('keydown', event => {
     const code = event.code.toLowerCase()
@@ -16,6 +19,23 @@ document.addEventListener('keyup', event => {
 })
 
 const startGame = () => {
+    let SCORE = 0
+    const gameTime = 20 //SECONDS
+    let remainingTime = gameTime
+    const updateScoreBoard = ()=>{
+        document.querySelector('#score').innerHTML = `Score:${SCORE} Remaining: ${remainingTime}`
+    }
+    updateScoreBoard()
+    startScreen.hide()
+    const timer = setInterval(()=>{
+        updateScoreBoard()
+        if(remainingTime > 1){
+            remainingTime -= 1
+        } else{
+            remainingTime = 0
+            startScreen.show()
+        }
+    },1000)
     require('object/Desks').init(scene)
     require('object/Phones').init(scene)
     const playerSpeed = 5
@@ -62,7 +82,8 @@ const startGame = () => {
                     const hitItem = item[0].actor
                     if (hitItem.name === 'phone' && hitItem.ringing) {
                         hitItem.pickup()
-                        console.log('Caught ringing phone!')
+                        SCORE+=1
+                        updateScoreBoard()
                     }
                 }
 
@@ -85,5 +106,7 @@ const loop = () => {
 }
 loop()
 
-
-startGame()
+const startButton = document.querySelector('#start-screen button')
+startButton.addEventListener('click',()=>{
+    startGame()
+})

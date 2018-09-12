@@ -2,3 +2,26 @@ canvas {
     width: 100%;
     border: 1px solid #ccc
 }
+.hide {
+    display:none
+}
+#start-screen, #finish-screen {
+    padding: 50px 20%;
+    text-align:center
+}
+button {
+    background:#8c8c8c;
+    color:#fff;
+    padding: 15px;
+    font-size:20px;
+    box-shadow: 0px 0px 10px #000;
+    cursor:pointer;
+}
+#score {
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:10px;
+    box-shadow:0px 0px 10px #000;
+    border: 2px solid #ccc;
+}
