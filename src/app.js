@@ -20,7 +20,7 @@ document.addEventListener('keyup', event => {
 
 const startGame = () => {
     let SCORE = 0
-    const gameTime = 20 //SECONDS
+    const gameTime = 60 //SECONDS
     let remainingTime = gameTime
     const updateScoreBoard = ()=>{
         document.querySelector('#score').innerHTML = `Score:${SCORE} Remaining: ${remainingTime}`
