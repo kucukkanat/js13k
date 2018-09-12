@@ -56,7 +56,7 @@ Player.init(scene)
             temp.apply(this,[])
         }
         player.onCollide = e => {
-            // console.log('Collided with ',e)
+           // console.log('Collided with ',e)
         }
         player.sprite.play()
     })

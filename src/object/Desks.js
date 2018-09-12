@@ -4,10 +4,10 @@ const AssetManager = require('class/AssetManager')
 const Vector = require('class/Vector')
 
 const floorPlan = `
-xxx00x00000
+x000x00000
 0000x0x000
 000x00000x
-0000000000
+0000000x00
 xx000000x0
 0000000000
 000000x000
@@ -49,6 +49,17 @@ module.exports = {
                     frames:1
                 })
             })
+								desk.onCollide(e => {
+									console.log('Desk collided')
+								})
+
+								const temp = desk.draw
+								desk.draw = ()=>{
+									temp.apply(desk)
+									const ctx = desk.scene.context
+									ctx.rect(desk.position.x,desk.position.y,desk.width,desk.height);
+									ctx.stroke();
+								}
         })
         
     })

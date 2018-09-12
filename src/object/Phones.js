@@ -19,7 +19,7 @@ module.exports = {
                     if (cells[x] === 'x') {
                         deskPositions.push({
                             x: x * 55 + 20,
-                            y: y * 55
+                            y: y * 55 - 10
                         })
                     }
 
@@ -42,13 +42,22 @@ module.exports = {
                         frames: 4
                     })
                 })
-
+								const temp = phone.draw
+								phone.draw = ()=>{
+									temp.apply(phone)
+									const ctx = phone.scene.context
+									ctx.rect(phone.position.x,phone.position.y,phone.width,phone.height);
+									ctx.stroke();
+								}
+								phone.onCollide(items => {
+									console.log('Collided')
+									console.log(items)
+								})
                 // Randomly start to ring
                 const ring = () => {
                     const ringFor = 5
                     const randomTime = Math.random() * 15*SECONDS
                     
-                    console.log(`Will ring after ${randomTime}`)
                     setTimeout(() => {
                         phone.sprite.play()
                         // Ring for 5 seconds

@@ -129,6 +129,11 @@ module.exports = class GameObject {
     onCollide() {}
     /**
      * @memberof GameObject
+		 * Logically a still standing object can not collide
+		 * with another. Because the engine checks for the colliding
+		 * objects velocity. An object with no velocity will have 
+		 * 0 (zero) number of this.collisions
+		 * Check update() method for how collisions are assigned to the object
      * @returns {GameObject[]} Array of collides objects
      */
     calculateCollisions() {
