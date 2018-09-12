@@ -1,47 +1,65 @@
 const Scene = require('class/Scene')
 const scene = new Scene()
 scene.addToBody()
+const keys = []
+document.addEventListener('keydown', event => {
+    const code = event.code.toLowerCase()
+    keys[code] = true
+})
+document.addEventListener('keyup', event => {
+    const code = event.code.toLowerCase()
+    keys[code] = false
+})
+
+require('object/desks').init(scene)
 
 const Player = require('object/Player')
 Player.init(scene)
-.then(p => {
-    const runRight = player => {
-        player.sprite.y = 25
-    }
-    const runLeft = player => {
-        player.sprite.y = 50
-    }
-    // Keydowns
-    p.onKeydown('arrowdown',function(){
-        this.velocity.y = 2
+    .then(player => {
+        // Extend update function
+        const temp = player.update
+        player.update = function() {
+            
+            if(keys['arrowright']) {
+                player.sprite.y = 25
+                player.velocity.x = 4
+                player.sprite.speed = 100
+            }
+            if(keys['arrowleft']) {
+                player.sprite.y = 50
+                player.velocity.x = -4
+                player.sprite.speed = 100
+            }
+            if(keys['arrowup']) {
+                player.sprite.y = 25
+                player.velocity.y = -4
+                player.sprite.speed = 100
+            }
+            if(keys['arrowdown']) {
+                player.sprite.y = 50
+                player.velocity.y = 4
+                player.sprite.speed = 100
+            }
+            const horizontalStop = !keys.arrowright && !keys.arrowleft
+            const verticalStop = !keys.arrowup && !keys.arrowdown
+            if(verticalStop) player.velocity.y = 0
+            if(horizontalStop) player.velocity.x = 0
+
+            if(horizontalStop && verticalStop){
+                player.sprite.y = 0 
+                player.sprite.speed = 300
+            }
+            
+            console.log(this.collisions.length)
+                
+            // IDLE
+            temp.apply(this,[])
+        }
+        player.onCollide = e => {
+            // console.log('Collided with ',e)
+        }
+        player.sprite.play()
     })
-    p.onKeydown('arrowup',function(){
-        this.velocity.y = -2
-    })
-    p.onKeydown('arrowright',function(){
-        this.velocity.x = 2
-        runRight(this)
-    })
-    p.onKeydown('arrowleft',function(){
-        this.velocity.x = -2
-        runLeft(this)
-    })
-    // Keyups
-    p.onKeyup('arrowdown',function(){
-        this.removeVelocity()
-    })
-    p.onKeyup('arrowup',function(){
-        this.removeVelocity()
-    })
-    p.onKeyup('arrowright',function(){
-        this.removeVelocity()
-    })
-    p.onKeyup('arrowleft',function(){
-        this.removeVelocity()
-    })
-    console.log(p)
-    p.sprite.play()
-})
 const loop = () => {
     scene.clear()
     scene.draw()

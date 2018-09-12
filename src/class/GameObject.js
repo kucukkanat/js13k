@@ -30,10 +30,10 @@ module.exports = class GameObject {
         this.width = 20
         this.height = 20
         this.body = BodyType.DYNAMIC
-        this.tick=0
-        this.animationIndex=0
+        this.tick = 0
+        this.animationIndex = 0
         this.sprite = null
-        
+        this.collisions = []
         // Override defaults
         Object.assign(this, props)
         if (!this.sprite instanceof Sprite) throw new Error(`Sprite must be an instance of Sprite class!`)
@@ -45,7 +45,10 @@ module.exports = class GameObject {
     }
     /**
      * @memberof GameObject
-     * Updates the GameObject every frame
+     * Updates the GameObject every frame. 
+     * 
+     * Important notice! : After collisions are calculated 
+     * since corrections are applied there will be no collisions!
      */
     update() {
         if (this.body !== BodyType.STATIC) {
@@ -53,9 +56,9 @@ module.exports = class GameObject {
             this.velocity = this.velocity.add(this.acceleration)
         }
         // Run onCollide function if collides
-        const collisions = this.collisions()
-        if(collisions.length > 0){
-            this.onCollide(collisions)
+        this.collisions = this.calculateCollisions()
+        if (this.collisions.length > 0) {
+            this.onCollide(this.collisions)
         }
     }
     /**
@@ -69,8 +72,8 @@ module.exports = class GameObject {
      * @memberof GameObject
      * Removes velocity on all directions on the object
      */
-    removeVelocity(){
-        this.velocity = new Vector(0,0)
+    removeVelocity() {
+        this.velocity = new Vector(0, 0)
     }
     /**
      * @memberof GameObject
@@ -85,15 +88,15 @@ module.exports = class GameObject {
      * @memberof GameObject
      * @returns {number} x - The middle position on x axis
      */
-    midX(){
-        return this.position.x + this.width/2
+    midX() {
+        return this.position.x + this.width / 2
     }
     /**
      * @memberof GameObject
      * @returns {number} y - The middle position on y axis
      */
-    midY(){
-        return this.position.y + this.height/2
+    midY() {
+        return this.position.y + this.height / 2
     }
     /**
      * @memberof GameObject
@@ -123,12 +126,12 @@ module.exports = class GameObject {
     right() {
         return this.position.x + this.width;
     }
-    onCollide(){}
+    onCollide() {}
     /**
      * @memberof GameObject
      * @returns {GameObject[]} Array of collides objects
      */
-    collisions() {
+    calculateCollisions() {
         const collidedActors = []
         for (let i = 0; i < this.scene.actors.length; i++) {
             const actor = this.scene.actors[i]
@@ -137,27 +140,38 @@ module.exports = class GameObject {
             const hWidth = this.width / 2 + actor.width / 2
             const hHeight = this.height / 2 + actor.height / 2
             const collides = midDistanceX < hWidth && midDistanceY < hHeight && this !== actor
-            if(collides){
+            if (collides) {
                 const collideX = hWidth - midDistanceX
                 const collideY = hHeight - midDistanceY
-                
+
                 // If vertically collided (y-axis)
-                if(collideY < collideX) {
-                    if(this.velocity.y > 0) {
-                        collidedActors.push({actor,direction:'top'})
+                if (collideY < collideX) {
+                    if (this.velocity.y > 0) {
+                        collidedActors.push({
+                            actor,
+                            direction: 'top'
+                        })
                     } else if (this.velocity.y < 0) {
-                        collidedActors.push({actor,direction:'bottom'})
+                        collidedActors.push({
+                            actor,
+                            direction: 'bottom'
+                        })
                     }
                     // Correction - save the GameObject from merging the other actor
-                    console.log(this.bottom(),actor.top())
                     this.position.y -= this.velocity.y
-                    
+
                 } else {
-                    if(this.velocity.x > 0) {
-                        collidedActors.push({actor,direction:'left'})
+                    if (this.velocity.x > 0) {
+                        collidedActors.push({
+                            actor,
+                            direction: 'left'
+                        })
                     } else if (this.velocity.x < 0) {
-                        collidedActors.push({actor,direction:'right'})
-                    } 
+                        collidedActors.push({
+                            actor,
+                            direction: 'right'
+                        })
+                    }
                     // Correction - save the GameObject from merging the other actor
                     this.position.x -= this.velocity.x
                 }
@@ -170,12 +184,12 @@ module.exports = class GameObject {
      * @param {string} key - The key code
      * @param {function} cb - function to call
      */
-    onKeydown(key,cb){
-        document.addEventListener('keydown',event => {
+    onKeydown(key, cb) {
+        document.addEventListener('keydown', event => {
             const code = event.code.toLowerCase()
-            if(key === code){
+            if (key === code) {
                 cb.apply(this)
-            } else if(key === 'any') {
+            } else if (key === 'any') {
                 cb.apply(this)
             }
         })
@@ -185,12 +199,12 @@ module.exports = class GameObject {
      * @param {string} key - The key code
      * @param {function} cb - function to call
      */
-    onKeyup(key,cb){
-        document.addEventListener('keyup',event => {
+    onKeyup(key, cb) {
+        document.addEventListener('keyup', event => {
             const code = event.code.toLowerCase()
-            if(key === code){
+            if (key === code) {
                 cb.apply(this)
-            } else if(arguments.length === 1) {
+            } else if (arguments.length === 1) {
                 arguments[0].apply(this)
             }
         })
@@ -200,10 +214,10 @@ module.exports = class GameObject {
      * @param {string} key - The key code
      * @param {function} cb - function to call
      */
-    onKeypress(key,cb){
-        document.addEventListener('keypress',event => {
+    onKeypress(key, cb) {
+        document.addEventListener('keypress', event => {
             const code = event.code.toLowerCase()
-            if(key === code){
+            if (key === code) {
                 cb.apply(this)
             }
         })
@@ -212,17 +226,17 @@ module.exports = class GameObject {
      * @memberof GameObject
      * Draws the gameobject if it has a sprite
      */
-    draw(){
-        if(this.sprite){
+    draw() {
+        if (this.sprite) {
             this.scene.context.drawImage(
-                this.sprite.image, 
+                this.sprite.image,
                 this.sprite.x, //source x
                 this.sprite.y, // source y
                 this.sprite.width, // source width
                 this.sprite.height, // source height
-                this.position.x, 
-                this.position.y, 
-                this.width, 
+                this.position.x,
+                this.position.y,
+                this.width,
                 this.height
             )
         }
