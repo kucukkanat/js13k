@@ -11,7 +11,8 @@ document.addEventListener('keyup', event => {
     keys[code] = false
 })
 
-require('object/desks').init(scene)
+require('object/Desks').init(scene)
+require('object/Phones').init(scene)
 
 const Player = require('object/Player')
 Player.init(scene)
@@ -50,8 +51,7 @@ Player.init(scene)
                 player.sprite.speed = 300
             }
             
-            console.log(this.collisions.length)
-                
+            
             // IDLE
             temp.apply(this,[])
         }

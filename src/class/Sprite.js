@@ -29,6 +29,7 @@ module.exports = class Sprite{
     }
     /**
      * @memberof Sprite
+     * @method
      * Plays the animation
      */
     play(){
@@ -43,6 +44,11 @@ module.exports = class Sprite{
         }
         roller()
     }
+    /**
+     * @memberof Sprite
+     * @method
+     * Pauses the animation
+     */
     pause(){
         clearTimeout(this.loop)
     }

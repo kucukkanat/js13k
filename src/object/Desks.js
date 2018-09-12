@@ -14,6 +14,7 @@ xx000000x0
 `
 
 module.exports = {
+    floorPlan,
     init : (scene) => new AssetManager()
     .load('assets/desk.png')
     .then(image => {
